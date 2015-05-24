@@ -32,18 +32,6 @@ uninstall-extra:
 		fi \
 	fi
 
-dist:
-	@if [ ! -d .hg ]; then \
-		echo "make dist only works from a mercurial tree"; \
-		false; \
-	fi
-	hg parent --template '#define SERNO "{rev}:{node|short}"\n' >include/serno.h
-	@echo "Creating $(DISTNAME).tar.gz"
-	$(RM) -f $(DISTNAME)
-	$(LN) -s . $(DISTNAME)
-	hg manifest | awk '{ print "$(DISTNAME)/"$$1; } END { print "$(DISTNAME)/configure"; print "$(DISTNAME)/aclocal.m4"; print "$(DISTNAME)/include/sysconf.h.in"; print "$(DISTNAME)/include/serno.h"; }' | $(TAR) -chnzf $(DISTNAME).tar.gz -T /dev/stdin
-	$(RM) $(DISTNAME)
-
 buildsys.mk:
-	@echo "Run ./configure first you idiot."
+	@echo "Please run ./configure first."
 	@exit 1
